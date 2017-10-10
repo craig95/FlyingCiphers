@@ -6,6 +6,7 @@ Craig van Heerden and Dewald de Jager
 import string
 import re
 from itertools import permutations
+import sys
 
 
 class DefaultDict(dict):
@@ -120,6 +121,9 @@ def argmax(sequence, fn):
     best_fn, best_e = max([(fn(e), e) for e in sequence])
     return best_e
 
+if len(sys.argv) != 2:
+    print('Please pass in the ciphertext as the only argument!')
+    exit(1)
 
 text = open('194kwords.txt', 'r').read()
 text = re.sub(r'[^A-Za-z0-9 \n]+', '', text)
@@ -127,8 +131,9 @@ text = text.lower()
 words = text.split()
 
 test = CeaserDecoder(words)
-answer = test.decode(
-    '2XQM5QN7A10QYUXXU104M0P59146T1R5TM4Q5M0PNQOM4QR7X01661NQ5QQ0NA6TQM7564MXUM0S18Q40YQ06M0P2XQM5QNQ8USUXM06')
+answer = test.decode(sys.argv[1])
+# answer = test.decode(
+#     '2XQM5QN7A10QYUXXU104M0P59146T1R5TM4Q5M0PNQOM4QR7X01661NQ5QQ0NA6TQM7564MXUM0S18Q40YQ06M0P2XQM5QNQ8USUXM06')
 test.print_all_attempts()
 print('\nThe best plain text found was:\n')
 print(answer)
